@@ -32,7 +32,7 @@ cc.Class({
             }
         };
         
-        cc.loader.loadResAll("textures", function (err, assets) {
+        cc.loader.loadResDir("textures", function (err, assets) {
             self.onLoadComplete();
         });      
     },

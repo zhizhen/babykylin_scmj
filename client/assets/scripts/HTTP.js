@@ -1,5 +1,6 @@
 
-var URL = "http://127.0.0.1:9000";
+// var URL = "http://127.0.0.1:9000";
+var URL = "http://185.133.192.117:8000";
 
 exports.master_url = null;
 exports.url = null;
