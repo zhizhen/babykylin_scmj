@@ -189,28 +189,38 @@ app.get('/wechat_auth',function(req,res){
 		if(suc){
 			var access_token = data.session_key;
 			var openid = data.openid;
-			get_state_info(access_token,openid,function(suc2,data2){
-				if(suc2){
-					var openid = data2.openid;
-					var nickname = data2.nickname;
-					var sex = data2.sex;
-					var headimgurl = data2.headimgurl;
-					var account = "wx_" + openid;
-					console.log(data)
-					console.log(data2)
-					create_user(account,nickname,sex,headimgurl,function(){
-						var sign = crypto.md5(account + req.ip + config.ACCOUNT_PRI_KEY);
-					    var ret = {
-					        errcode:0,
-					        errmsg:"ok",
-					        account:account,
-					        halladdr:hallAddr,
-					        sign:sign
-					    };
-					    send(res,ret);
-					});						
-				}
-			});
+			// get_state_info(access_token,openid,function(suc2,data2){
+			// 	if(suc2){
+			// 		var openid = data2.openid;
+			// 		var nickname = data2.nickname;
+			// 		var sex = data2.sex;
+			// 		var headimgurl = data2.headimgurl;
+			// 		var account = "wx_" + openid;
+			// 		console.log(data)
+			// 		console.log(data2)
+			// 		create_user(account,nickname,sex,headimgurl,function(){
+			// 			var sign = crypto.md5(account + req.ip + config.ACCOUNT_PRI_KEY);
+			// 		    var ret = {
+			// 		        errcode:0,
+			// 		        errmsg:"ok",
+			// 		        account:account,
+			// 		        halladdr:hallAddr,
+			// 		        sign:sign
+			// 		    };
+			// 		    send(res,ret);
+			// 		});						
+			// 	}
+			// });
+			var account = "wx_" + openid;
+			var sign = crypto.md5(account + req.ip + config.ACCOUNT_PRI_KEY);
+			var ret = {
+				errcode:0,
+				errmsg:"ok",
+				account:account,
+				halladdr:hallAddr,
+				sign:sign
+			};
+			send(res,ret);
 		}
 		else{
 			send(res,{errcode:-1,errmsg:"unkown err."});
