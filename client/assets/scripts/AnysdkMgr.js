@@ -47,15 +47,38 @@ cc.Class({
     },
     
     login:function(){
-        if(cc.sys.os == cc.sys.OS_ANDROID){ 
-            jsb.reflection.callStaticMethod(this.ANDROID_API, "Login", "()V");
-        }
-        else if(cc.sys.os == cc.sys.OS_IOS){
-            jsb.reflection.callStaticMethod(this.IOS_API, "login");
-        }
-        else{
-            console.log("platform:" + cc.sys.os + " dosn't implement share.");
-        }
+        // if(cc.sys.os == cc.sys.OS_ANDROID){ 
+        //     jsb.reflection.callStaticMethod(this.ANDROID_API, "Login", "()V");
+        // }
+        // else if(cc.sys.os == cc.sys.OS_IOS){
+        //     jsb.reflection.callStaticMethod(this.IOS_API, "login");
+        // }
+        // else{
+        //     console.log("platform:" + cc.sys.os + " dosn't implement share.");
+        // }
+        wx.login({
+          success: function(res) {
+            if (res.code) {
+              //发起网络请求
+            var fn = function(ret){
+                if(ret.errcode == 0){
+                    cc.sys.localStorage.setItem("wx_account",ret.account);
+                    cc.sys.localStorage.setItem("wx_sign",ret.sign);
+                }
+                cc.vv.userMgr.onAuth(ret);
+            }
+            cc.vv.http.sendRequest("/wechat_auth", {code:res.code, os:cc.sys.os}, fn);
+              // wx.request({
+              //   url: 'https://test.com/onLogin',
+              //   data: {
+              //     code: res.code
+              //   }
+              // })
+            } else {
+              console.log('登录失败！' + res.errMsg)
+            }
+          }
+        });
     },
     
     share:function(title,desc){
@@ -120,14 +143,14 @@ cc.Class({
         setTimeout(fn,50);
     },
     
-    onLoginResp:function(code){
-        var fn = function(ret){
-            if(ret.errcode == 0){
-                cc.sys.localStorage.setItem("wx_account",ret.account);
-                cc.sys.localStorage.setItem("wx_sign",ret.sign);
-            }
-            cc.vv.userMgr.onAuth(ret);
-        }
-        cc.vv.http.sendRequest("/wechat_auth",{code:code,os:cc.sys.os},fn);
-    },
+    // onLoginResp:function(code){
+    //     var fn = function(ret){
+    //         if(ret.errcode == 0){
+    //             cc.sys.localStorage.setItem("wx_account",ret.account);
+    //             cc.sys.localStorage.setItem("wx_sign",ret.sign);
+    //         }
+    //         cc.vv.userMgr.onAuth(ret);
+    //     }
+    //     cc.vv.http.sendRequest("/wechat_auth",{code:code,os:cc.sys.os},fn);
+    // },
 });

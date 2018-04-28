@@ -120,12 +120,12 @@ app.get('/auth',function(req,res){
 
 var appInfo = {
 	Android:{
-		appid:"wxe39f08522d35c80c",
-		secret:"fa88e3a3ca5a11b06499902cea4b9c01",
+		appid:"wxed19674a141b1843",
+		secret:"a5c9757e6034faecd7ab71d3b8878186",
 	},
 	iOS:{
-		appid:"wxcb508816c5c4e2a4",
-		secret:"7de38489ede63089269e3410d5905038",		
+		appid:"wxed19674a141b1843",
+		secret:"a5c9757e6034faecd7ab71d3b8878186",		
 	}
 };
 
@@ -169,6 +169,14 @@ function create_user(account,name,sex,headimgurl,callback){
 		}
 	});
 };
+// app.get('/wechat_auth', function(req, res){
+// 	var code = req.query.code;
+// 	var os = req.query.os;
+// 	if(code == null || code == "" || os == null || os == ""){
+// 		return;
+// 	}
+// 	console.log(os);
+// });
 app.get('/wechat_auth',function(req,res){
 	var code = req.query.code;
 	var os = req.query.os;
