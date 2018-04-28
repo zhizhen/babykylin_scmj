@@ -196,6 +196,8 @@ app.get('/wechat_auth',function(req,res){
 					var sex = data2.sex;
 					var headimgurl = data2.headimgurl;
 					var account = "wx_" + openid;
+					console.log(data)
+					console.log(data2)
 					create_user(account,nickname,sex,headimgurl,function(){
 						var sign = crypto.md5(account + req.ip + config.ACCOUNT_PRI_KEY);
 					    var ret = {
