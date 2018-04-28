@@ -187,7 +187,7 @@ app.get('/wechat_auth',function(req,res){
 	console.log(os);
 	get_access_token(code,os,function(suc,data){
 		if(suc){
-			var access_token = data.access_token;
+			var access_token = data.session_key;
 			var openid = data.openid;
 			get_state_info(access_token,openid,function(suc2,data2){
 				if(suc2){
