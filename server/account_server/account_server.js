@@ -137,11 +137,12 @@ function get_access_token(code,os,callback){
 	var data = {
 		appid:info.appid,
 		secret:info.secret,
-		code:code,
+		js_code:code,
 		grant_type:"authorization_code"
 	};
 
-	http.get2("https://api.weixin.qq.com/sns/oauth2/access_token",data,callback,true);
+	// http.get2("https://api.weixin.qq.com/sns/oauth2/access_token",data,callback,true);
+	http.get2("https://api.weixin.qq.com/sns/jscode2session", data, callback, true)
 }
 
 function get_state_info(access_token,openid,callback){
